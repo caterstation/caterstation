@@ -1,9 +1,21 @@
-import { View, Text, StyleSheet, FlatList, Image, Pressable, ActivityIndicator } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import { blue, white } from './Colors';
-import { useNavigation } from '@react-navigation/native';
-import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  Pressable,
+  ActivityIndicator,
+} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {blue, white} from './Colors';
+import {useNavigation} from '@react-navigation/native';
+import {
+  responsiveFontSize,
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import axios from 'axios';
 import HorizontalBar from './HorizontalBar';
 
@@ -12,8 +24,8 @@ const getEinvitesData = async () => {
   return result.data;
 };
 
-const WeddingCard = ({ route }) => {
-  const { card } = route.params;
+const WeddingCard = ({route}) => {
+  const {card} = route.params;
   const navigation = useNavigation();
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,12 +34,17 @@ const WeddingCard = ({ route }) => {
     const fetchImages = async () => {
       try {
         const data = await getEinvitesData();
-        console.log('Fetched data:', data);
+        //console.log('Fetched data:', data);
 
         if (data && data.einvites) {
-          const filteredImages = card === 'cor'
-            ? data.einvites.filter(item => item.category === 'Corporate').map(item => item.image)
-            : data.einvites.filter(item => item.category !== 'Corporate').map(item => item.image);
+          const filteredImages =
+            card === 'cor'
+              ? data.einvites
+                  .filter(item => item.category === 'Corporate')
+                  .map(item => item.image)
+              : data.einvites
+                  .filter(item => item.category !== 'Corporate')
+                  .map(item => item.image);
 
           setImages(filteredImages);
         } else {
@@ -44,7 +61,10 @@ const WeddingCard = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <HorizontalBar backPress={() => navigation.goBack()} title={card === "wed" ? "Wedding Cards" : "Corporate Cards"} />
+      <HorizontalBar
+        backPress={() => navigation.goBack()}
+        title={card === 'wed' ? 'Wedding Cards' : 'Corporate Cards'}
+      />
 
       {loading ? (
         <View style={styles.loadingContainer}>
@@ -55,25 +75,24 @@ const WeddingCard = ({ route }) => {
           data={images}
           showsVerticalScrollIndicator={false}
           numColumns={3}
-          renderItem={({ item }) => {
+          renderItem={({item}) => {
             const img = `https://caterstation.pro/public/einvites/${item}`;
-            console.log('====================================');
-            console.log("einvites item ", item);
-            console.log('====================================');
+            //console.log('====================================');
+            //console.log("einvites item ", item);
+            //console.log('====================================');
             return (
               <Pressable
                 onPress={() => {
-                  navigation.navigate("WedCardDetails", { picCard: img, card });
+                  navigation.navigate('WedCardDetails', {picCard: img, card});
                 }}
-                style={styles.wedDecCard}
-              >
+                style={styles.wedDecCard}>
                 <Image
-                  resizeMode='contain'
+                  resizeMode="contain"
                   style={styles.cardImage}
-                  source={{ uri: img }}
+                  source={{uri: img}}
                 />
               </Pressable>
-            )
+            );
           }}
           keyExtractor={(item, index) => index.toString()}
         />

@@ -15,7 +15,7 @@ import {
   View,
   useWindowDimensions,
   Platform,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {black, blue, greyBg, greyDark, white, yellow} from './Colors';
@@ -49,22 +49,28 @@ const PackageUserDetails = () => {
   const [payment_method, setPaymentMethod] = useState('transfer');
   const [userId, setUserId] = useState(''); // User ID from authentication (replace with actual value)
 
-
-  
   const myData = useSelector(state => state.package.cart);
-  console.log("myData", myData)
+  //console.log("myData", myData)
   const totalBil = myData.reduce((totalPrice, item) => {
     return totalPrice + item.price * item.quantity; // Assuming each item has a 'price' property
   }, 0);
 
-  const handleEmpty=()=>{
-    if(phone==[] || email==[] || zip ==[] || f_name ==[] || l_name ==[] || address==[] || state ==[]){
-      Alert.alert('Please Fill the empty fields')
-    } else{
+  const handleEmpty = () => {
+    if (
+      phone == [] ||
+      email == [] ||
+      zip == [] ||
+      f_name == [] ||
+      l_name == [] ||
+      address == [] ||
+      state == []
+    ) {
+      Alert.alert('Please Fill the empty fields');
+    } else {
       // navigation.navigate('PackageORderSummary',{f_name,l_name,passid,phone }) //packagename, no of guest, total bill
       handleSubmit();
     }
-  }
+  };
   const generateUniqueOrderId = () => {
     // Generate a full UUID
     const fullUuid = uuid.v4();
@@ -77,16 +83,10 @@ const PackageUserDetails = () => {
 
     return orderId;
   };
-  useEffect(() => {
-   
+  useEffect(() => {}, []);
+  const passid = generateUniqueOrderId();
 
-   },[])
-   const passid=generateUniqueOrderId();
-  
-  
-
-  
-   const scrollViewProps = Platform.select({
+  const scrollViewProps = Platform.select({
     ios: {
       contentInsetAdjustmentBehavior: 'automatic',
     },
@@ -94,49 +94,58 @@ const PackageUserDetails = () => {
       keyboardShouldPersistTaps: 'handled',
     },
   });
-  
-
-
- 
-  
 
   const handleSubmit = async () => {
     // Log the state to ensure that f_name is properly set
-    console.log("State:", { f_name, l_name, address, zip, state, city, email, phone, payment_method, passid });
+    //console.log("State:", { f_name, l_name, address, zip, state, city, email, phone, payment_method, passid });
     // const quantity= obj.quantity,
-  const formattedCartItems = myData.map(obj => ({
-    quantity: obj.quantity,
-    image: obj.image,
-    name: obj.package_name,
-    id: obj.id
-}));
-console.log( "formattedCartItems",formattedCartItems)
+    const formattedCartItems = myData.map(obj => ({
+      quantity: obj.quantity,
+      image: obj.image,
+      name: obj.package_name,
+      id: obj.id,
+    }));
+    //console.log( "formattedCartItems",formattedCartItems)
     setCartItems(formattedCartItems);
-  
+
     try {
-      const response = await axios.post('https://caterstation.pro/api/place-order', {
-        cartItems: formattedCartItems,
-        f_name: f_name, // Change to match the names used in Laravel
-        l_name: l_name,
-        address: address,
-        zip: zip,
-        state: state,
-        city: city,
-        email: email,
-        phone: phone,
-        price: totalBil,
-        payment_method: payment_method,
-        order_id: passid, // Send 'passid' instead of 'user_id' to match Laravel
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
+      const response = await axios.post(
+        'https://caterstation.pro/api/place-order',
+        {
+          cartItems: formattedCartItems,
+          f_name: f_name, // Change to match the names used in Laravel
+          l_name: l_name,
+          address: address,
+          zip: zip,
+          state: state,
+          city: city,
+          email: email,
+          phone: phone,
+          price: totalBil,
+          payment_method: payment_method,
+          order_id: passid, // Send 'passid' instead of 'user_id' to match Laravel
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      navigation.navigate('PackageORderSummary', {
+        f_name,
+        l_name,
+        passid,
+        phone,
       });
-  navigation.navigate('PackageORderSummary',{f_name,l_name,passid ,phone} )
       // Handle successful response
       // Alert.alert('Success!', response.data.message); // Display success message with order IDs
-      console.log('Created Order IDs:', response.data.orderIds); // Log order IDs for debugging
-  navigation.navigate("PackageORderSummary",{f_name,l_name,passid ,phone})
+      //console.log('Created Order IDs:', response.data.orderIds); // Log order IDs for debugging
+      navigation.navigate('PackageORderSummary', {
+        f_name,
+        l_name,
+        passid,
+        phone,
+      });
     } catch (error) {
       // Handle error
       if (error.response) {
@@ -146,33 +155,34 @@ console.log( "formattedCartItems",formattedCartItems)
       }
     }
   };
-  
 
-    
-    
   // Clear form fields after successful placement (optional)
-        // setCartItems([]);
-        // setFName('');
-        // setLName('');
-        // setAddress('');
-        // setZip('');
-        // setState('');
-        // setCity('');
-        // setEmail('');
-        // setPhone('');
-        // setPaymentMethod('');
- 
+  // setCartItems([]);
+  // setFName('');
+  // setLName('');
+  // setAddress('');
+  // setZip('');
+  // setState('');
+  // setCity('');
+  // setEmail('');
+  // setPhone('');
+  // setPaymentMethod('');
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-    <ScrollView  style={{backgroundColor:white}} showsVerticalScrollIndicator={false} {...scrollViewProps} contentContainerStyle={styles.container}>
-      
-    <View style={{ width: responsiveWidth(100) }}>
-        <ImgHbar
-  backPress={() => navigation.goBack()}
-  title="User Detail"
-  headerImage={require('../Images/eventType.png')}
-/>
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <ScrollView
+        style={{backgroundColor: white}}
+        showsVerticalScrollIndicator={false}
+        {...scrollViewProps}
+        contentContainerStyle={styles.container}>
+        <View style={{width: responsiveWidth(100)}}>
+          <ImgHbar
+            backPress={() => navigation.goBack()}
+            title="User Detail"
+            headerImage={require('../Images/eventType.png')}
+          />
         </View>
 
         <Text
@@ -237,7 +247,7 @@ console.log( "formattedCartItems",formattedCartItems)
         <View style={[styles.commonBox, {justifyContent: 'center'}]}>
           <TextInput
             value={zip}
-            keyboardType='number-pad'
+            keyboardType="number-pad"
             onChangeText={txt => {
               setZip(txt);
             }}
@@ -249,7 +259,7 @@ console.log( "formattedCartItems",formattedCartItems)
         <View style={[styles.commonBox, {justifyContent: 'center'}]}>
           <TextInput
             value={phone}
-            keyboardType='phone-pad'
+            keyboardType="phone-pad"
             onChangeText={txt => {
               setPhone(txt);
             }}
@@ -259,42 +269,71 @@ console.log( "formattedCartItems",formattedCartItems)
           />
         </View>
 
-        <View style={[{height: responsiveHeight(15),  paddingVertical:responsiveHeight(2),
-      width: responsiveWidth(90),
-      backgroundColor: greyBg,
-      paddingHorizontal: responsiveWidth(4),
-      marginVertical: responsiveHeight(2),
-      marginHorizontal: responsiveWidth(5),}]}>
-            <TextInput
-              numberOfLines={3}
-              value={address}
-              onChangeText={txt => {
-                setAddress(txt);
-              }}
-              placeholder="Enter Your Address"
-              style={{
-                fontSize: responsiveFontSize(1.8),
-                color: black,
-                justifyContent: 'center',
-              }}
-              placeholderTextColor={black}
-            />
-          </View>
+        <View
+          style={[
+            {
+              height: responsiveHeight(15),
+              paddingVertical: responsiveHeight(2),
+              width: responsiveWidth(90),
+              backgroundColor: greyBg,
+              paddingHorizontal: responsiveWidth(4),
+              marginVertical: responsiveHeight(2),
+              marginHorizontal: responsiveWidth(5),
+            },
+          ]}>
+          <TextInput
+            numberOfLines={3}
+            value={address}
+            onChangeText={txt => {
+              setAddress(txt);
+            }}
+            placeholder="Enter Your Address"
+            style={{
+              fontSize: responsiveFontSize(1.8),
+              color: black,
+              justifyContent: 'center',
+            }}
+            placeholderTextColor={black}
+          />
+        </View>
 
-          <View style={{ justifyContent: "center", alignItems: "center", width: responsiveWidth(100), marginBottom: responsiveHeight(5), marginTop: responsiveHeight(2) }}>
-          <View style={{  backgroundColor: blue }}>
-            <TouchableOpacity style={{height: responsiveHeight(4), width: responsiveWidth(40),justifyContent:"center", alignItems:"center", }}
-             onPress={() => {handleEmpty() }}>
-              <Text style={{ color: "white", fontWeight: "bold",textAlign:"center"  }}>Submit</Text>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: responsiveWidth(100),
+            marginBottom: responsiveHeight(5),
+            marginTop: responsiveHeight(2),
+          }}>
+          <View style={{backgroundColor: blue}}>
+            <TouchableOpacity
+              style={{
+                height: responsiveHeight(4),
+                width: responsiveWidth(40),
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onPress={() => {
+                handleEmpty();
+              }}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                }}>
+                Submit
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
 
         {/* </View> */}
       </ScrollView>
-    {/* </SafeAreaView> */}
+      {/* </SafeAreaView> */}
     </KeyboardAvoidingView>
-  );}
+  );
+};
 
 const styles = StyleSheet.create({
   centeredView: {

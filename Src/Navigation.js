@@ -71,42 +71,21 @@ import MenuConfirm from './MenuConfirm';
 
 const Navigation = () => {
   const Stack = createStackNavigator();
-
-
-
-
   return (
-
     <NavigationContainer>
-
-
       <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
-
-
         <Stack.Screen
           name="AuthNav"
           component={AuthNav}
           options={{ headerShown: false }}
         />
-
         <Stack.Screen
           name="AfterLoginC"
           component={AfterLoginC}
           options={{ headerShown: false }}
         />
-
-
-
-
-
-      </Stack.Navigator>
-
-
-
-
-
-
+   </Stack.Navigator>
     </NavigationContainer>
   );
 };
@@ -370,14 +349,12 @@ const AfterLoginC = () => {
         name='MenuAddOns'
         component={MenuAddOns}
         options={{ headerShown: false }}
-      /> 
+      />
        <Stack.Screen
         name='MenuConfirm'
         component={MenuConfirm}
         options={{ headerShown: false }}
-      /> 
-    
-
+      />
 
 
     </Stack.Navigator>

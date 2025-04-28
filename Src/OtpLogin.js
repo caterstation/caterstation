@@ -8,20 +8,19 @@
 
 // import axios from 'axios';
 
-
 // export const OtpLogin = () => {
 //   const navigation = useNavigation();
 //   const [reg,setreg]=useState();
 //   const [otp, setOtp] = useState('');
 //   const [values, setValues] = useState(Array(4).fill(''));
-  
+
 //  const [isLoading, setIsLoading] = useState(false);
 //  const [error, setError] = useState(null);
 
 //  const handleSubmit = async () => {
 //    setIsLoading(true);
 //    setError(null); // Clear any previous errors
- 
+
 //    try {
 //      const response = await axios.post('https://caterstation.pro/api/otp-verify', {
 //        values
@@ -30,8 +29,8 @@
 //          'Content-Type': 'application/json',
 //        },
 //      });
- 
-//      console.log('POST request successful:', response.data);
+
+//      //console.log('POST request successful:', response.data);
 //      navigation.navigate('Home');
 //      // Handle successful response
 //    } catch (error) {
@@ -42,14 +41,13 @@
 //      setIsLoading(false);
 //    }
 //  };
- 
+
 //   return (
-   
+
 //       <View style={styles.container}>
 //           <View style={[{ position: "absolute", top: 0, }]}>
 
 //           <Image style={{ width: responsiveWidth(100) }} source={require('../Images/bg1.png')} />
-
 
 //           </View>
 //           <View style={[{justifyContent:"center",alignItems:"center", height:responsiveHeight(25), }]}>
@@ -62,12 +60,6 @@
 
 //               <Text style={[styles.HeadText,{marginTop:60}]}> Confirmation Code</Text>
 //               <Text style={[styles.textLight]}>Please enter the verification code </Text>
-              
-           
-
-
-
-
 
 //               <View style={styles.otpContainer}>
 //               <OTPInputView
@@ -80,12 +72,11 @@
 //    codeInputHighlightStyle={styles.underlineStyleHighLighted}
 //    onCodeFilled = {(code => {
 //      setValues(code)
-//        console.log(`Code is ${code}, you are good to go!`)
+//        //console.log(`Code is ${code}, you are good to go!`)
 //    })}
 // />
 //       </View>
-             
-             
+
 //       <Pressable onPress={()=>{handleSubmit()}} style={[styles.BtnBlue,]}>
 //                <Text style={[{color:"white", fontSize:responsiveFontSize(1.7)}]}>Verify</Text>
 
@@ -106,10 +97,7 @@
 //                />
 //                </View>
 
-
 //           </View>
-
-
 
 //       </View>
 //   );
@@ -138,7 +126,7 @@
 //    height:responsiveHeight(75),
 //    width: responsiveWidth(100),
 //    position: "absolute",
-   
+
 //    bottom:0,
 //    backgroundColor: "white",
 //    borderTopLeftRadius: 30,
@@ -153,7 +141,7 @@
 // },
 // textLight:{
 //    color:blue,
-//    fontSize:responsiveFontSize(1.9),  
+//    fontSize:responsiveFontSize(1.9),
 // },
 // BtnBlue:{
 //    // paddingHorizontal:responsiveWidth(2),
@@ -185,9 +173,6 @@
 //        textAlign:"center",
 //    },
 
-
-
- 
 //       error: {
 //         color: 'red',
 //         marginBottom: 10,
@@ -216,11 +201,11 @@
 //        height: responsiveHeight(7),
 //        borderColor: blue,
 //      },
-   
+
 //      borderStyleHighLighted: {
 //        borderColor: greyBg,
 //      },
-   
+
 //      underlineStyleBase: {
 //        width: responsiveWidth(12),
 //        height: responsiveHeight(7),
@@ -229,31 +214,27 @@
 //        fontSize:20,
 //        color:blue,
 //        borderColor: blue,
-   
+
 //      },
-   
+
 //      underlineStyleHighLighted: {
 //        borderColor: blue,
-       
-//      },
-   
-   
-  
-// });
 
+//      },
+
+// });
 
 // export default OtpLogin
 
-
-import { View, Text } from 'react-native'
-import React from 'react'
+import {View, Text} from 'react-native';
+import React from 'react';
 
 const OtpLogin = () => {
   return (
     <View>
       <Text>OtpLogin</Text>
     </View>
-  )
-}
+  );
+};
 
-export default OtpLogin
+export default OtpLogin;

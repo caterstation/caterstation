@@ -1,46 +1,37 @@
+import React, {useState, useEffect} from 'react';
+import {View, Text, StyleSheet, ImageBackground, Image} from 'react-native';
 
-
-
-// recent work
-
-
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
-
-import { useNavigation } from '@react-navigation/native';
-import { blue, yellow } from './Colors';
-import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import {useNavigation} from '@react-navigation/native';
+import {blue, yellow} from './Colors';
+import {
+  responsiveFontSize,
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDispatch } from 'react-redux';
-import { userLogin } from './redux/MyUserSlice';
-import Video from 'react-native-video';
-
+import {useDispatch} from 'react-redux';
+import {userLogin} from './redux/MyUserSlice';
 
 const SplashScreen = () => {
-
-
-
-  
-  const dispatch =useDispatch();
+  const dispatch = useDispatch();
 
   const navigation = useNavigation();
-  const videoUri = require('../Images/Splash.mp4');
+  const SplashUri = require('../Images/Splash.gif');
 
   const [isLoading, setIsLoading] = useState(true);
-  
 
   useEffect(() => {
     const checkPhoneNumber = async () => {
       try {
         const phoneNumber = await AsyncStorage.getItem('phoneNumber');
-        const userInfoo=await AsyncStorage.getItem('userInfo');
+        const userInfoo = await AsyncStorage.getItem('userInfo');
         const jsonObject = JSON.parse(userInfoo);
-        console.log(' user info in async storage : ' ,jsonObject)
+        //console.log(' user info in async storage : ' ,jsonObject)
 
         if (phoneNumber) {
           // Phone number exists, navigate to Home screen after 5 seconds
           setTimeout(() => {
-      dispatch(userLogin(jsonObject))
+            dispatch(userLogin(jsonObject));
 
             navigation.replace('AfterLoginC');
           }, 5000);
@@ -65,29 +56,16 @@ const SplashScreen = () => {
     return () => {
       clearTimeout(); // Clear any existing setTimeout
     };
-  }, [navigation]); // Dependency on navigation to avoid linting warnings
+  }, [navigation,dispatch]); // Dependency on navigation to avoid linting warnings
 
   return (
-
-
-<View style={{flex:1, backgroundColor:blue,height: responsiveHeight(900)}}>
-
-<Video
-              source={videoUri}
-              // Provide your video source here'
-              resizeMode={"cover"}
-              repeat={true}
-              style={{
-                width: responsiveWidth(100), // Set width to 100% for full width
-                height: responsiveHeight(100),
-              }}
-              // Optional styles for the video player
-              controls={false}      // Enable playback controls
-              // onError={(error) => console.error(error)} // Handle video errors
-            />
-    
-  </View>
-   
+    <View
+      style={{flex: 1, backgroundColor: blue, height: responsiveHeight(900)}}>
+              <Image source={SplashUri}  style={{
+          width: responsiveWidth(100), // Set width to 100% for full width
+          height: responsiveHeight(100),
+        }}/>
+    </View>
   );
 };
 
@@ -95,14 +73,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: blue,
-    position: "relative",
+    position: 'relative',
   },
   text: {
     fontSize: responsiveFontSize(3),
     color: yellow,
     fontWeight: 'bold',
     top: -150,
-    textAlign: "center",
+    textAlign: 'center',
   },
 });
 
