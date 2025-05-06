@@ -1,6 +1,7 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
-import OTPInputView from '@twotalltotems/react-native-otp-input';
+//import OTPInputView from '@twotalltotems/react-native-otp-input';
+import OTPInputView from 'react-native-otp-input';
 import {blue, greyBg, white} from './Colors';
 
 const OtpInp = () => {

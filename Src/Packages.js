@@ -88,7 +88,7 @@ const Packages = () => {
   }, [view]); */
 
   const whatsAppPressHandler = () => {
-    const url = `https://wa.me/+923257870001`;
+    const url = 'https://wa.me/+923257870001';
     Linking.canOpenURL(url)
       .then(supported => {
         if (supported) {
@@ -102,7 +102,7 @@ const Packages = () => {
 
   const renderItem = ({item}) => {
     //console.log('-------------------- renderItem ', item);
-    if (!item) return null;
+    if (!item) {return null;}
     const imgS = `https://www.caterstation.pro/public/vendor/package/${item.image}`;
     return (
       <View style={styles.shadowCard}>
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   cardImage: {
-    width: '99%',
+    //width: '99%',
     height: responsiveHeight(20),
     borderRadius: 8,
     width: responsiveWidth(90),
