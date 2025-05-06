@@ -18,7 +18,8 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
-import OTPInputView from '@twotalltotems/react-native-otp-input';
+//import OTPInputView from '@twotalltotems/react-native-otp-input';
+import OTPInputView from 'react-native-otp-input';
 import axios from 'axios';
 
 export const Otp = ({route}) => {
@@ -38,46 +39,7 @@ export const Otp = ({route}) => {
     },
   });
 
-  // const handleSubmit = async () => {
-  //   setError(null); // Clear any previous errors
-  //   if (otp.length !== 4) {
-  //     Alert.alert("Fill in the OTP fields");
-  //     return;
-  //   }
-  //   setIsLoading(true);
 
-  //   try {
-  //     const response = await axios.post('https://caterstation.pro/api/otp-verify', {
-  //       otp: otp
-  //     }, {
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     });
-
-  //     //console.log('POST request successful:', response.data);
-  //     if (verify === "Login") {
-  //       navigation.replace('AfterLoginC');
-  //     } else if (verify === "Reg") {
-  //       navigation.navigate('Login');
-  //     }
-  //   } catch (error) {
-  //     if (error.response) {
-  //       console.error('Response data:', error.response.data);
-  //       console.error('Response status:', error.response.status);
-  //       console.error('Response headers:', error.response.headers);
-  //     } else if (error.request) {
-  //       console.error('Request data:', error.request);
-  //     } else {
-  //       console.error('Error message:', error.message);
-  //     }
-  //     console.error('Config:', error.config);
-
-  //     Alert.alert('Invalid OTP');
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
 
   const handleSubmit = async () => {
     setError(null); // Clear any previous errors

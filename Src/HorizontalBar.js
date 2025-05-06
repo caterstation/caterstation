@@ -11,8 +11,8 @@ const HorizontalBar = ({ backPress, title }) => {
     <View>
       <View style={styles.container}>
   <TouchableOpacity onPress={backPress} style={{ flex: 1,  paddingVertical:responsiveHeight(1), paddingLeft:responsiveWidth(4) }}>
-  {/* <FontAwsome name="angle-left" color={blue} size={20} /> */}
-  <Icon name="search" size={24} color={blue}  />
+  <FontAwsome name="angle-left" color={blue} size={20} />
+
   </TouchableOpacity>
   <Text style={styles.title}>{title}</Text>
   <TouchableOpacity style={{ flex: 1 }} />
