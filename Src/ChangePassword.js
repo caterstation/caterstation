@@ -1,46 +1,59 @@
-import {View, Text, StyleSheet, TextInput, Pressable} from 'react-native';
 import React, {useState} from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Entypo from 'react-native-vector-icons/Entypo';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Pressable,
+  ActivityIndicator,
+} from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome5';
+import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 import {
   responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
-import {black, blue, greyBg, greyDark, lightgrey, white} from './Colors';
-import {useNavigation} from '@react-navigation/native';
-import FontAwsome from 'react-native-vector-icons/FontAwesome5';
+import {black, blue, greyBg, greyDark, white} from './Colors';
 
 const ChangePassword = () => {
   const navigation = useNavigation();
-  const [password, setpss] = useState();
-  const [confirmPassword, setCpass] = useState();
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const handleSubmit = async () => {
+    if (!password || !confirmPassword) {
+      setError('Please fill in both fields.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
     setIsLoading(true);
-    setError(null); // Clear any previous errors
+    setError(null);
 
     try {
       const response = await axios.post(
         'https://caterstation.pro/api/',
         {
-          // email,
-          password, // Assuming phone is the correct state variable name
-          // password,
+          password,
         },
         {
           headers: {
             'Content-Type': 'application/json',
           },
-        },
+        }
       );
 
-      //   //console.log('POST request successful fromlogin apiss:', response.data);
-      // navigation.navigate("Otp")
-
-      // Handle successful response
+      navigation.navigate('ProfilePage');
     } catch (error) {
-      console.error('Error in POST request:', error);
-      console.error('Error in POST request:', error.response.data);
+      console.error('Error:', error.response?.data);
       setError(error.response?.data?.message || 'An error occurred.');
     } finally {
       setIsLoading(false);
@@ -48,75 +61,101 @@ const ChangePassword = () => {
   };
 
   return (
-    <View style={{height: responsiveHeight(100)}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          width: responsiveWidth(100),
-          paddingVertical: responsiveHeight(2),
-          paddingHorizontal: responsiveWidth(5),
-          alignItems: 'center',
-          borderBottomColor: greyBg,
-          borderBottomWidth: 1,
-        }}>
-        <FontAwsome name="angle-left" color={'black'} size={20} />
-
-        <Text
-          style={{
-            marginLeft: responsiveWidth(28),
-            color: black,
-            fontSize: responsiveFontSize(2.5),
-            fontWeight: 'bold',
-          }}>
-          Change Password
-        </Text>
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <FontAwesome name="angle-left" color={black} size={20} />
+        <Text style={styles.headerText}>Change Password</Text>
       </View>
 
-      <View style={styles.txtInput}>
+      {/* New Password */}
+      <View style={styles.inputWrapper}>
         <TextInput
+          placeholder="New Password"
           placeholderTextColor={black}
           value={password}
-          onChange={txt => txt}
-          placeholder="New Password"
+          secureTextEntry
+          onChangeText={setPassword}
+          style={styles.textInput}
         />
       </View>
 
-      <View style={styles.txtInput}></View>
+      {/* Confirm Password */}
+      <View style={styles.inputWrapper}>
+        <TextInput
+          placeholder="Confirm Password"
+          placeholderTextColor={black}
+          value={confirmPassword}
+          secureTextEntry
+          onChangeText={setConfirmPassword}
+          style={styles.textInput}
+        />
+      </View>
 
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: responsiveHeight(5),
-          marginBottom: responsiveHeight(5),
-        }}>
-        <Pressable
-          onPress={() => {
-            handleSubmit();
-            navigation.navigate('ProfilePage');
-          }}
-          style={{
-            paddingHorizontal: responsiveWidth(15),
-            paddingVertical: responsiveHeight(1.5),
-            backgroundColor: blue,
-          }}>
-          <Text style={{color: white}}>Save Changes</Text>
+      {error && <Text style={styles.errorText}>{error}</Text>}
+
+      {/* Submit Button */}
+      <View style={styles.buttonWrapper}>
+        <Pressable onPress={handleSubmit} style={styles.button}>
+          {isLoading ? (
+            <ActivityIndicator color={white} />
+          ) : (
+            <Text style={styles.buttonText}>Save Changes</Text>
+          )}
         </Pressable>
       </View>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
-  txtInput: {
-    borderBottomWidth: responsiveWidth(0.1),
+  container: {
+    height: responsiveHeight(100),
+    backgroundColor: white,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: responsiveHeight(2),
+    paddingHorizontal: responsiveWidth(5),
+    borderBottomWidth: 1,
+    borderBottomColor: greyBg,
+  },
+  headerText: {
+    marginLeft: responsiveWidth(28),
+    fontSize: responsiveFontSize(2.5),
+    fontWeight: 'bold',
+    color: black,
+  },
+  inputWrapper: {
+    borderBottomWidth: responsiveWidth(0.2),
     borderBottomColor: greyDark,
     marginHorizontal: responsiveWidth(4),
-    marginBottom: responsiveHeight(1),
-    height: responsiveHeight(6),
+    marginBottom: responsiveHeight(2),
   },
-  txt: {
+  textInput: {
+    height: responsiveHeight(6),
     color: black,
-    fontSize: responsiveFontSize(1.8),
+  },
+  buttonWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: responsiveHeight(5),
+  },
+  button: {
+    paddingHorizontal: responsiveWidth(15),
+    paddingVertical: responsiveHeight(1.5),
+    backgroundColor: blue,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: white,
+    fontSize: responsiveFontSize(2),
+  },
+  errorText: {
+    color: 'red',
+    textAlign: 'center',
+    marginBottom: responsiveHeight(2),
   },
 });
 
