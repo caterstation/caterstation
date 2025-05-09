@@ -1,177 +1,172 @@
 import React, { useState } from 'react';
-import { View, Text ,StyleSheet, TextInput , Pressable,ScrollView, Image} from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+} from 'react-native';
 
-import { black, greyBg, white } from './Colors'
-import Entypo from 'react-native-vector-icons/Entypo'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import FontAwsome from 'react-native-vector-icons/FontAwesome5'
-import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
-
+import FontAwsome from 'react-native-vector-icons/FontAwesome5';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-const FirstRoute = () => (
-    <ScrollView style={[styles.scene, { backgroundColor: '#ffffff' }]}>
-      <View style={[styles.shadowcard,
-          {
-           flexDirection: "row", paddingHorizontal: responsiveWidth(3), paddingVertical: responsiveHeight(1.5), width: responsiveWidth(94),
 
-          }]}>
+import {
+  responsiveFontSize,
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
 
-            <View style={{ flexDirection: "row", width: responsiveWidth(100), paddingLeft: responsiveWidth(2) }}>
-              <View style={{ width: responsiveWidth(15), backgroundColor: "green " }}>
-                <Image style={{ height: responsiveHeight(6), width: responsiveWidth(12) }} source={require('../Images/food1.jpg')} />
-              </View>
-              <View style={{ flexDirection: "column", }}>
-                {/* <View style={{justifyContent:"space-between", flexDirection:"row" }}> */}
-                <Text style={{ fontWeight: 'bold', color: black }} >One Dish with mutton</Text>
-                <View><Text>Alnafora</Text></View>
+import { black, greyBg, white } from './Colors';
 
-                <Text style={{ fontWeight: 'bold', color: black }} >Rs: 2000</Text>
-               
-              </View>
+const OrderCard = () => (
+  <View style={styles.shadowCard}>
+    <View style={styles.cardRow}>
+      <View style={styles.imageWrapper}>
+        <Image
+          style={styles.image}
+          source={require('../Images/food1.jpg')}
+        />
+      </View>
+      <View style={styles.textWrapper}>
+        <Text style={styles.itemTitle}>One Dish with mutton</Text>
+        <Text>Alnafora</Text>
+        <Text style={styles.price}>Rs: 2000</Text>
+      </View>
+    </View>
+  </View>
+);
 
-
-            </View>
-
-          </View>
-    </ScrollView>
-   );
-   
-   const SecondRoute = () => (
-    <ScrollView style={[styles.scene, { backgroundColor: '#ffffff' }]}>
-    <View style={[styles.shadowcard,
-        {
-         flexDirection: "row", paddingHorizontal: responsiveWidth(3), paddingVertical: responsiveHeight(1.5), width: responsiveWidth(94),
-
-        }]}>
-
-          <View style={{ flexDirection: "row", width: responsiveWidth(100), paddingLeft: responsiveWidth(2) }}>
-            <View style={{ width: responsiveWidth(15), backgroundColor: "green " }}>
-              <Image style={{ height: responsiveHeight(6), width: responsiveWidth(12) }} source={require('../Images/food1.jpg')} />
-            </View>
-            <View style={{ flexDirection: "column", }}>
-              {/* <View style={{justifyContent:"space-between", flexDirection:"row" }}> */}
-              <Text style={{ fontWeight: 'bold', color: black }} >One Dish with mutton</Text>
-              <View><Text>Alnafora</Text></View>
-
-              <Text style={{ fontWeight: 'bold', color: black }} >Rs: 2000</Text>
-             
-            </View>
-
-
-          </View>
-
-        </View>
+const OrderList = () => (
+  <ScrollView style={styles.scene}>
+    <OrderCard />
+    <OrderCard />
+    <OrderCard />
   </ScrollView>
-   );
-   
-   const ThirdRoute = () => (
-    <ScrollView style={[styles.scene, { backgroundColor: '#ffffff' }]}>
-    <View style={[styles.shadowcard,
-        {
-         flexDirection: "row", paddingHorizontal: responsiveWidth(3), paddingVertical: responsiveHeight(1.5), width: responsiveWidth(94),
+);
 
-        }]}>
-
-          <View style={{ flexDirection: "row", width: responsiveWidth(100), paddingLeft: responsiveWidth(2) }}>
-            <View style={{ width: responsiveWidth(15), backgroundColor: "green " }}>
-              <Image style={{ height: responsiveHeight(6), width: responsiveWidth(12) }} source={require('../Images/food1.jpg')} />
-            </View>
-            <View style={{ flexDirection: "column", }}>
-              {/* <View style={{justifyContent:"space-between", flexDirection:"row" }}> */}
-              <Text style={{ fontWeight: 'bold', color: black }} >One Dish with mutton</Text>
-              <View><Text>Alnafora</Text></View>
-
-              <Text style={{ fontWeight: 'bold', color: black }} >Rs: 2000</Text>
-             
-            </View>
-
-
-          </View>
-
-        </View>
-  </ScrollView>
-   );
-   
-   const renderScene = SceneMap({
-     upcoming: FirstRoute,
-     completed: SecondRoute,
-     cancelled: ThirdRoute,
-   });
-   
+const renderScene = SceneMap({
+  upcoming: OrderList,
+  completed: OrderList,
+  cancelled: OrderList,
+});
 
 const MyOrders = () => {
-
-    const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(0);
   const [routes] = useState([
-     { key: 'upcoming', title: 'Upcoming' },
-     { key: 'completed', title: 'Completed' },
-     { key: 'cancelled', title: 'Cancelled' },
+    { key: 'upcoming', title: 'Upcoming' },
+    { key: 'completed', title: 'Completed' },
+    { key: 'cancelled', title: 'Cancelled' },
   ]);
- 
+
   const renderLabel = ({ route }) => (
-     <Text style={styles.tabLabel}>{route.title}</Text>
+    <Text style={styles.tabLabel}>{route.title}</Text>
   );
- 
+
   const renderTabBar = (props) => (
-     <TabBar
-       {...props}
-       indicatorStyle={styles.indicator}
-       style={styles.tabbar}
-       renderLabel={renderLabel}
-     />
+    <TabBar
+      {...props}
+      indicatorStyle={styles.indicator}
+      style={styles.tabbar}
+      renderLabel={renderLabel}
+    />
   );
 
   return (
-    <View style={{flex:1,backgroundColor:white}}>
-    <View
-      style={{ flexDirection: "row", width: responsiveWidth(100), paddingVertical: responsiveHeight(2), paddingHorizontal: responsiveWidth(5), alignItems: "center", borderBottomColor: greyBg, borderBottomWidth: 1 ,}}>
-      <FontAwsome name="angle-left" color={"black"} size={20} />
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <FontAwsome name="angle-left" color={black} size={20} />
+        <Text style={styles.headerText}>My Orders</Text>
+      </View>
 
-      <Text style={{ marginLeft: responsiveWidth(28), color: black, fontSize: responsiveFontSize(2.5), fontWeight: "bold" }}>My Orders</Text>
+      <View style={styles.tabContainer}>
+        <TabView
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={{ width: '100%' }}
+          renderTabBar={renderTabBar}
+        />
+      </View>
     </View>
-    <View style={{marginHorizontal:responsiveWidth(3), marginTop:responsiveHeight(1), height:responsiveHeight(90)}}>
+  );
+};
 
-   
-    <TabView
-       navigationState={{ index, routes }}
-       renderScene={renderScene}
-       onIndexChange={setIndex}
-       initialLayout={{ width: '100%' }}
-       renderTabBar={renderTabBar}
-     /> 
-
-        </View>
-        </View>
-  )
-}
 const styles = StyleSheet.create({
-    scene: {
-       flex: 1,
-       
-    },
-    tabbar: {
-       backgroundColor: '#ffffff',
-       marginBottom:responsiveHeight(2)
-    },
-    tabLabel: {
-       color: '#000000',
-       // backgroundColor:"red"
-       // marginTop:20
-    },
-    indicator: {
-       backgroundColor: black,
-       height: 2,
-    },
-    shadowcard: {
-        // marginHorizontal: responsiveWidth(2),
-        marginVertical: responsiveHeight(1),
-        borderRadius: 5, shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        // Elevate the view to create a shadow effect
-        elevation: 4,
-      },
-   });
+  container: {
+    flex: 1,
+    backgroundColor: white,
+  },
+  header: {
+    flexDirection: 'row',
+    paddingVertical: responsiveHeight(2),
+    paddingHorizontal: responsiveWidth(5),
+    alignItems: 'center',
+    borderBottomColor: greyBg,
+    borderBottomWidth: 1,
+  },
+  headerText: {
+    marginLeft: responsiveWidth(28),
+    color: black,
+    fontSize: responsiveFontSize(2.5),
+    fontWeight: 'bold',
+  },
+  tabContainer: {
+    marginHorizontal: responsiveWidth(3),
+    marginTop: responsiveHeight(1),
+    height: responsiveHeight(90),
+  },
+  scene: {
+    flex: 1,
+    backgroundColor: white,
+  },
+  tabbar: {
+    backgroundColor: white,
+    marginBottom: responsiveHeight(2),
+  },
+  tabLabel: {
+    color: black,
+  },
+  indicator: {
+    backgroundColor: black,
+    height: 2,
+  },
+  shadowCard: {
+    marginVertical: responsiveHeight(1),
+    borderRadius: 5,
+    backgroundColor: white,
+    paddingHorizontal: responsiveWidth(3),
+    paddingVertical: responsiveHeight(1.5),
+    width: responsiveWidth(94),
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  cardRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: responsiveWidth(2),
+  },
+  imageWrapper: {
+    width: responsiveWidth(15),
+    marginRight: responsiveWidth(3),
+  },
+  image: {
+    height: responsiveHeight(6),
+    width: responsiveWidth(12),
+  },
+  textWrapper: {
+    flexDirection: 'column',
+  },
+  itemTitle: {
+    fontWeight: 'bold',
+    color: black,
+  },
+  price: {
+    fontWeight: 'bold',
+    color: black,
+  },
+});
 
-export default MyOrders
+export default MyOrders;

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, ImageBackground, Image} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import {useNavigation} from '@react-navigation/native';
 import {blue, yellow} from './Colors';
@@ -17,7 +18,6 @@ const SplashScreen = () => {
 
   const navigation = useNavigation();
   const SplashUri = require('../Images/Splash.gif');
-
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -59,12 +59,12 @@ const SplashScreen = () => {
   }, [navigation,dispatch]); // Dependency on navigation to avoid linting warnings
 
   return (
-    <View
-      style={{flex: 1, backgroundColor: blue, height: responsiveHeight(900)}}>
-              <Image source={SplashUri}  style={{
-          width: responsiveWidth(100), // Set width to 100% for full width
-          height: responsiveHeight(100),
-        }}/>
+    <View style={styles.container}>
+        <FastImage
+          source={SplashUri}
+          style={styles.image}
+          resizeMode={FastImage.resizeMode.cover}
+        />
     </View>
   );
 };
@@ -73,15 +73,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: blue,
-    position: 'relative',
-  },
-  text: {
-    fontSize: responsiveFontSize(3),
-    color: yellow,
-    fontWeight: 'bold',
-    top: -150,
-    textAlign: 'center',
-  },
+   // position: 'relative',
+   height: responsiveHeight(900)
+  },    
+  image:{
+    width: responsiveWidth(100),
+    height: responsiveHeight(100),
+  }
 });
+
+
 
 export default SplashScreen;
