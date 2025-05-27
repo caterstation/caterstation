@@ -64,7 +64,7 @@ const ServiceTabComponent = ({slug, description}) => {
     getmyVendorsDetail(slug).then(result => {
       setmyAllDataVendor(result);
     });
-  }, []);
+  }, [slug]);
   return (
     <View style={styles.container}>
       <FlatList

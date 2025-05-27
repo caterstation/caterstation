@@ -151,7 +151,7 @@ const VendorQuestionsComponent = () => {
           color: blue,
           fontSize: responsiveFontSize(2),
           marginBottom: responsiveHeight(1),
-        }}></Text>
+        }} />
 
       <View>{myView1()}</View>
       <View>{myView2()}</View>
@@ -192,7 +192,6 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: responsiveFontSize(1.8),
     fontWeight: 'bold',
-    justifyContent: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: responsiveWidth(1),

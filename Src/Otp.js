@@ -18,8 +18,8 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
-//import OTPInputView from '@twotalltotems/react-native-otp-input';
-import OTPInputView from 'react-native-otp-input';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
+//import OTPInputView from 'react-native-otp-input';
 import axios from 'axios';
 
 export const Otp = ({route}) => {

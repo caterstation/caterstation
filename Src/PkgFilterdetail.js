@@ -33,7 +33,7 @@ import {addToCart} from './redux/MyPackageSlice';
 import {getHomeOffers} from './Hooks/api/ForyouApi';
 import {useNavigation} from '@react-navigation/native';
 import {useWindowDimensions} from 'react-native';
-
+import {addMyPackage} from './redux/MyPackageSlice';
 const getDataoffers = async () => {
   const result = await getHomeOffers();
   return result;

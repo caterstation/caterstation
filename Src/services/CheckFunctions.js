@@ -11,3 +11,5 @@ export const storepackage = data => {
   }
 };
 export default storepackage;
+
+

@@ -1,7 +1,14 @@
-import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, StyleSheet, Text, TouchableOpacity, View, Image,Modal} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Carousel from 'react-native-snap-carousel';
 import {useNavigation} from '@react-navigation/native';
+import {
+  responsiveFontSize,
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
+import {blue} from './Colors';
+
 
 const ImageCarousel = ({
   selectedImage,
@@ -54,7 +61,7 @@ const ImageCarousel = ({
       [
         {
           text: 'Cancel',
-          onPress: () => //console.log('Cancel Pressed'),
+          onPress: () => {},
           style: 'cancel',
         },
         {
@@ -66,10 +73,11 @@ const ImageCarousel = ({
     );
   };
   const handleOrderNowPress = () => {
-    if (user == '') {
-      // Alert.alert("no user found")
-      showAlert();
-    } else {
+    ///************ user is not found, i commetn this out and when i came to kow the logic behind it. i will uncomment this */
+    // if (user == '') {
+    //   // Alert.alert("no user found")
+    //   showAlert();
+    // } else {
       //console.log('my data passing : ', vendor_id, portfolio_id);
       setIsModalOpened(false);
       handleClosePress();
@@ -77,7 +85,7 @@ const ImageCarousel = ({
         vendor_id: vendor_id,
         portfolio_id: portfolio_id,
       });
-    }
+    //}
 
     // setIsOrderModalOpened(true);
   };

@@ -58,6 +58,7 @@ const FilterComponent = ({view, setView, setSelectedType, setLoading}) => {
       setLoading(false);
     };
     fetchData();
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Render "first" view

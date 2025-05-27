@@ -1,4 +1,4 @@
-import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Image, Pressable, StyleSheet, Text, View,Alert} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {getHomeOffers} from '../../Hooks/api/ForyouApi';
@@ -55,7 +55,7 @@ const RecommendedPackagesComponent = ({isPressed}) => {
             return (
               <View>
                 <Image style={styles.image} source={{uri: imgS}} />
-                <View></View>
+                <View />
                 <Title style={styles.title}>{item.package_name}</Title>
               </View>
             );
